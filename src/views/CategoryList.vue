@@ -7,8 +7,7 @@
     </el-breadcrumb>
     <br>
     <el-button type="primary" @click="addCategory">添加新的菜品类别</el-button>
-      <!--
-    <el-table :data="myData" stripe border>
+    <el-table :data="categoryList" stripe border>
       <el-table-column label="编号" prop="cid"></el-table-column>
       <el-table-column label="名称" prop="cname"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150px">
@@ -16,11 +15,7 @@
         <el-button type="success" size="small" plain @click="doUpdate(row.cid,$index)">修改</el-button>
         <el-button type="danger" size="small" plain @click="doDelete(row.cid,$index)">删除</el-button>
       </template>
-    </el-table-column>
-    </el-table>
-    -->
-    <el-table :data="myData">
-      <el-table-column label="编号" prop="cid"></el-table-column>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -28,7 +23,6 @@
   export default {
     data(){
       return{
-        myData:[{cid:1},{cid:2}],
         categoryList:[]
       }
     },
@@ -44,7 +38,7 @@
           var url=this.$store.state.globalSettings.apiUrl+`/admin/category/${cid}`
           this.$axios.delete(url).then((result)=>{
             if(result.data.code==200){//数据库已删除成功
-              this.categoryList.splice(i,1);//模型数据中删除
+              this.categoryList.splice(index,1);//模型数据中删除
               this.$message.success('菜品类别删除成功！')
             }else{
               this.$message.error('类别删除成功！')
@@ -60,7 +54,23 @@
         
       },
       doUpdate(cid,index){
-        console.log(cid);
+        this.$prompt('请输入新的菜品类别名：','提示',{type:'info'}).then(({value})=>{
+          //获得用户的输入，调用数据api添加到数据库
+          var url = this.$store.state.globalSettings.apiUrl+'/admin/category';
+          this.$axios.put(url,{cname:value,cid}).then((res)=>{
+            if(res.data.code==200){
+              this.$message.success('类别修改成功！');
+              this.categoryList[index].cname = value
+            }else{
+              this.$message.error('类别修改出错：'+res.data.msg)
+            }
+            
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }).catch((err)=>{
+          console.log(err)
+        })
       },
       addCategory(){
         this.$prompt('请输入新的菜品类别名：','提示',{type:'info'}).then(({value})=>{
