@@ -46,7 +46,7 @@ Vue.filter('datetime',(val)=>{
 })
 Vue.filter('currency',(val)=>{
   //把int转换为￥xx.yy
-return '￥'+val.toFixed(2)
+ return '￥'+val.toFixed(2)
 })
 Vue.filter('tableStatus',(val)=>{
   if(val==1) return "空闲";

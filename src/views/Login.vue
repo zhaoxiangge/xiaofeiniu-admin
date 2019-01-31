@@ -33,7 +33,7 @@ export default {//普通组件的模型对象是函数
    methods: {
       doLogin(){//执行登录
         var url = this.$store.state.globalSettings.apiUrl+`/admin/login/${this.formData.aname}/${this.formData.apwd}`;
-        console.log(url)
+        //console.log(url)
         this.$axios.get(url).then((res)=>{
           if(res.data.code==200){//登录成功
           //把用户名存储到Vuex仓库
