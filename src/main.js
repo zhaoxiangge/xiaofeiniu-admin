@@ -55,7 +55,6 @@ Vue.filter('tableStatus',(val)=>{
   else return "其它";
 })
 
-
 new Vue({
   router,
   store,//指定当前项目唯一的vuex存储仓库对象，其中保存着可供所有组件共享的数据
