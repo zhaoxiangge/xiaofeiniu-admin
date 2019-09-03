@@ -43,6 +43,11 @@ export default {//普通组件的模型对象是函数
           }else{//登录失败
             this.$alert('用户名或密码有误！','登录失败',{type:'error'}).then(()=>{}).catch(()=>{})
           }
+        },()=>{
+          //把用户名存储到Vuex仓库
+          this.$store.commit('setAdminName',this.formData.aname);
+          //执行视图跳转
+            this.$router.push('/main')
         }).catch((err)=>{
           console.log(err)
         })
